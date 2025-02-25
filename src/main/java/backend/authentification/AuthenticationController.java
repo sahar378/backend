@@ -36,7 +36,10 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(
             @RequestBody User request
-    ) throws AuthenticationException {
+    ) {
+    	if (request.getUsername() == null || request.getPassword() == null) {
+            throw new IllegalArgumentException("Username and password are required");
+        }
         return ResponseEntity.ok(authService.authenticate(request));
     }
         

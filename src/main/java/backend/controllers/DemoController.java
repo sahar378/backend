@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import backend.services.JwtService;
+import backend.services.TokenCleanupService;
 
 @RestController
 public class DemoController {
 //demo : Accessible à tous les utilisateurs authentifiés.
+	@Autowired
+	 private  TokenCleanupService tokenCleanupService;
 	@Autowired
     private JwtService jwtService;
 
@@ -47,5 +50,11 @@ public class DemoController {
     @PreAuthorize("hasAuthority('PERSONNEL_MEDICAL')")
     public ResponseEntity<String> personnelMedicalSpace() {
         return ResponseEntity.ok("Hello PERSONNEL_MEDICAL");
+    }
+    
+    @GetMapping("/trigger-cleanup")
+    public String triggerCleanup() {
+        tokenCleanupService.cleanupExpiredTokens();
+        return "Tâche de nettoyage déclenchée manuellement !";
     }
 }

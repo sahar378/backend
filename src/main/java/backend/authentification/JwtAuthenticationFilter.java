@@ -1,5 +1,7 @@
 package backend.authentification;
-//Filtre les requêtes pour vérifier la présence et la validité du token JWT.
+//Il garantit que seules les requêtes avec un token JWT valide sont autorisées.
+// Filtre chaque requête pour vérifier la présence et la validité du token JWT. 
+//Si le token est valide, il authentifie l'utilisateur et définit son contexte de sécurité.ce qui permet à Spring Security de gérer les autorisations.
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,9 +43,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
              @NonNull HttpServletResponse response,
              @NonNull FilterChain filterChain)
             throws ServletException, IOException {
-
+    	//Extraire le Token de l'En-tête
         String authHeader = request.getHeader("Authorization");
-
+        //Cela permet aux endpoints publics (comme /login ou /register) de ne pas nécessiter de token.
         if(authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request,response);
             return;

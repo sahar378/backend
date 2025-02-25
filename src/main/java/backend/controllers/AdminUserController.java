@@ -1,4 +1,6 @@
 package backend.controllers;
+//Ce contrôleur gère les endpoints réservés à l'administrateur pour la gestion des utilisateurs (CRUD).
+//Seuls les utilisateurs ayant le rôle ADMIN peuvent accéder à ces endpoints.
 import backend.dto.RoleUpdateRequest;
 import backend.models.Role;
 //controlleur de l'admin
@@ -42,11 +44,9 @@ public class AdminUserController {
     // Créer un nouvel utilisateur
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User savedUser = userService.createUser(user);
-        return ResponseEntity.ok(savedUser);
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        return userService.createUser(user);
     }
-
     // Mettre à jour un utilisateur existant
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -64,13 +64,14 @@ public class AdminUserController {
     }
     
     //zedna lena 
-    //pour récupérer les utilisateurs en attente 
+    //pour récupérer les utilisateurs en attente (ayant le rôle USER)
     @GetMapping("/pending")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<User>> getPendingUsers() {
         List<User> pendingUsers = userService.getPendingUsers();
         return ResponseEntity.ok(pendingUsers);
     }
+    // Mettre à jour le rôle d'un utilisateur.
     @PutMapping("/{id}/role")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<User> updateUserRole(@PathVariable Long id, @RequestBody RoleUpdateRequest request) {
@@ -78,7 +79,7 @@ public class AdminUserController {
         User updatedUser = userService.updateUserRole(id, role);
         return ResponseEntity.ok(updatedUser);
     }
-    
+    //Récupérer la liste des utilisateurs n'ayant pas un rôle spécifique.
     @GetMapping("/not-role/{role}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<User>> getUsersByRoleNot(@PathVariable Role role) {

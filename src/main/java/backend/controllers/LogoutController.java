@@ -1,5 +1,5 @@
 package backend.controllers;
-
+//Ce contrôleur gère la déconnexion des utilisateurs en invalidant leur token JWT.
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/api/auth") // Vous pouvez personnaliser le préfixe de l'URL
+@RequestMapping("/api/auth")
 public class LogoutController {
 
     private final CustomLogoutHandler logoutHandler;

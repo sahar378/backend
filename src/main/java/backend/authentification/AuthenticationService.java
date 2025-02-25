@@ -81,11 +81,12 @@ public class AuthenticationService {
         }*/
             
             
-            //badelna lena 
-            return new AuthenticationResponse(token, user.getRole().name(), "User authenticated successfully");
+         // Renvoie le token, le rôle, le message et l'objet utilisateur complet
+            return new AuthenticationResponse(token, user.getRole().name(), "User authenticated successfully", user);
         } catch (AuthenticationException e) {
-            return new AuthenticationResponse(null, null, "Authentication failed: Invalid username or password");
+            return new AuthenticationResponse(null, null, "Authentication failed: Invalid username or password", null);
         }
+    
     }
 
 }

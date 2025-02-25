@@ -16,7 +16,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
     public UserDetailsServiceImp(UserRepository repository) {
         this.repository = repository;
     }
-
+//Charge les détails d'un utilisateur à partir de la base de données en utilisant son nom d'utilisateur.
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return repository.findByUsername(username)

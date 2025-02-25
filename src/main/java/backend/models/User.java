@@ -101,25 +101,26 @@ public class User implements UserDetails {
 	}
     @Override
     @JsonIgnore // Exclure cette propriété de la sérialisation/désérialisation JSON
+    //elle retourne une liste contenant le rôle de l'utilisateur.
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
-
+//Vérifie si le compte de l'utilisateur n'est pas expiré
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-
+//Vérifie si le compte de l'utilisateur n'est pas verrouillé
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
-
+//    Vérifie si les informations d'identification de l'utilisateur ne sont pas expirées
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
+// Vérifie si le compte de l'utilisateur est activé
     @Override
     public boolean isEnabled() {
         return true;

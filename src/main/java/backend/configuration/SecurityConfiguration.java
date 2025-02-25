@@ -50,6 +50,7 @@ public class SecurityConfiguration {
 	                }))
 	                .authorizeHttpRequests(req -> req
 	                        .requestMatchers("/login/**", "/register/**").permitAll() // Autoriser l'accès public à /login et /register
+	                       // .requestMatchers("/user/update").authenticated() // Exiger une authentification pour /user/update
 	                        .requestMatchers("/admin/**").hasAuthority("ADMIN") // Restreindre l'accès à /admin aux utilisateurs ayant le rôle ADMIN
 	                        .requestMatchers("/admin/users/**").hasAuthority("ADMIN") // Restreindre l'accès à /admin/users aux utilisateurs ayant le rôle ADMIN
 	                        .requestMatchers("/responsable_stock/**").hasAuthority("RESPONSABLE_STOCK") // Restreindre l'accès à /responsable_stock aux utilisateurs ayant le rôle RESPONSABLE_STOCK
@@ -73,7 +74,7 @@ public class SecurityConfiguration {
 	                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Ajouter le filtre JWT
 	                .build();
 	    }
-
+// Retourne un encodeur de mot de passe
 	    @Bean
 	    public PasswordEncoder passwordEncoder() {
 	        return new BCryptPasswordEncoder();
